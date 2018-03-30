@@ -1,4 +1,4 @@
-# Cerberus Glassfish images
+# Cerberus Glassfish image
 
 [Cerberus](http://www.cerberus-testing.org/) is an user-friendly automated testing framework.
 
@@ -10,7 +10,11 @@ Hereafter list of available tags:
 
 Tag     | Description                        | Source
 --------|------------------------------------|-------------------------------
-latest  | Use the latest Cerberus version    | [latest/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.7/Dockerfile)
+latest  | Use the latest Cerberus version    | [latest/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/latest/Dockerfile)
+1.1.12   | Use the 1.1.12 Cerberus version     | [1.1.12/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.12/Dockerfile)
+1.1.10   | Use the 1.1.10   Cerberus version   | [1.1.10/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.10/Dockerfile)
+1.1.9   | Use the 1.1.9   Cerberus version   | [1.1.9/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.9/Dockerfile)
+1.1.8   | Use the 1.1.8   Cerberus version   | [1.1.8/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.8/Dockerfile)
 1.1.7   | Use the 1.1.7   Cerberus version   | [1.1.7/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.7/Dockerfile)
 1.1.6   | Use the 1.1.6   Cerberus version   | [1.1.6/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.6/Dockerfile)
 1.1.5   | Use the 1.1.5   Cerberus version   | [1.1.5/Dockerfile](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.5/Dockerfile)
@@ -20,9 +24,10 @@ latest  | Use the latest Cerberus version    | [latest/Dockerfile](https://githu
 
 ## Prerequisites
 
-This image needs to be linked to a Cerberus database image, e.g., `cerberus-db-mysql`.
+This image needs to be linked to a Cerberus database image, as [`cerberus-db-mysql`](https://github.com/cerberustesting/cerberus-docker/tree/master/images/cerberus-db-mysql).
+See the `DATABASE_*` environment variables bellow for more details.
 
-See the `DATABASE_*` environment variables on the Dockerfile for more information.
+Note, from the [1.1.9](https://github.com/cerberustesting/cerberus-docker/blob/master/images/cerberus-as-glassfish/1.1.9/Dockerfile) version, the `cerberus-as-glassfish` is only compatible with the [MySQL](http://www.mysql.com/) dialect, so only usable by linking to the [`cerberus-db-mysql`](https://github.com/cerberustesting/cerberus-docker/tree/master/images/cerberus-db-mysql) Cerberus database image.
 
 ## How to run this image
 
@@ -34,7 +39,7 @@ This image can simply be run by using the following command:
 
 Note the use of the `-d` and `-P` arguments to let image be run as deamon and open ports outside container which is the common use.
 
-To run image by connecting to a MySQL Cerberus database located at `<database_host>:<database_port>` you could run (assume we are using default values for database type, name, username, and password):
+To run image by connecting to a MySQL Cerberus database located at `<database_host>:<database_port>` you could run (assume we are using default values for name, username, and password):
 
     docker run -d -P -e DATABASE_HOST='<database_host>' -e DATABASE_PORT='<database_port>' cerberus/cerberus-as-glassfish:latest
 
@@ -60,7 +65,6 @@ Hereafter list of environment variables that could be overridden when starting t
 
 Environment variable                    | Definition                                | Default value
 ----------------------------------------|-------------------------------------------|--------------------------
-`DATABASE_TYPE`                         | Cerberus database type                    | `mysql` or `mariadb` only
 `DATABASE_HOST`                         | Cerberus database host                    | `localhost`
 `DATABASE_PORT`                         | Cerberus database port                    | `3306`
 `DATABASE_NAME`                         | Cerberus database name                    | `cerberus`
@@ -98,7 +102,7 @@ With this example, you could access to the Glassfish administration console by r
 Cerberus server logs can be persisted by using the following command:
 
     docker run [...] -v /your/local/cerberus/server/logs/directory:/usr/local/glassfish4/glassfish/domains/domain1/logs cerberus/cerberus-as-glassfish:latest
-    
+
 Where `/your/local/cerberus/screenshots/directory` is the directory to store the Cerberus execution screenshots out of your Docker host.
 
 ### Cerberus screenshots
@@ -125,9 +129,10 @@ From the [1.1.6](https://github.com/cerberustesting/cerberus-docker/blob/master/
 
 ## License
 
-Cerberus Copyright (C) 2016 Cerberus Testing
+Cerberus Copyright (C) 2013 - 2017 cerberustesting
 
 This file is part of Cerberus.
+
 Cerberus is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
